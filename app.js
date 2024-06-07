@@ -2,66 +2,24 @@ let btn = document.querySelector('#new-quote');
 let quote = document.querySelector('.quote');
 let person = document.querySelector('.person');
 
-const quotes = [{
-    quote: '“Sometimes the road less traveled is less traveled for a reason.”',
-    person: '-Jerry Seinfeld'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: '“Never go to bed mad. Stay up and fight.”',
-    person: '-Phyllis Diller'
-},{
-    quote: '“If you can’t be kind, at least be vague.”',
-    person: '-Judith Martin'
-},{
-    quote: '“Misers are no fun to live with, but they make great ancestors.”',
-    person: '-Tom Snyder'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-},{
-    quote: 'Always forgive your enemies. nothing annoys them so much',
-    person: '-Oscar Wilde'
-}, ];
 
-btn.addEventListener('click', function(){
-    let random = Math.floor(Math.random() * quotes.length);
+//Function to get a new quote from the API
+async function getQuote() {
+    try {
+        const response = await fetch('https://api.quotable.io/random');
+        const data = await response.json();
+        quote.innerText = `"${data.content}"`;
+        person.innerText = `-${data.author}`;
 
-    quote.innerText = quotes[random].quote;
-    person.innerText = quotes[random].person;
-})
+    } catch (error) {
+        console.log("Error fetching the quote",error);
+        quote.innerText = "Oops! Something went wrong!";
+        person.innerText = "";
+    }
+}
 
+//Event listener to get a new quote when the button is clicked
+btn.addEventListener('click', getQuote);
+
+//Initial call to get a quote when the page loads
+getQuote();
